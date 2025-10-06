@@ -28,7 +28,7 @@ export const metadata = {
     siteName: "SnapSheet",
     images: [
       {
-        url: "https://snapsheetv1.vercel.app/placeholder.svg",
+        url: "https://snapsheetv1.vercel.app/favicon.ico",
         width: 1200,
         height: 630,
         alt: "SnapSheet - Imagens para PDF",

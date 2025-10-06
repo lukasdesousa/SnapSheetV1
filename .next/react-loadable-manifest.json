@@ -1,33 +1,20 @@
 {
-  "..\\node_modules\\jspdf\\dist\\jspdf.es.min.js -> canvg": {
-    "id": 1482,
+  "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts": {
+    "id": "..\\node_modules\\next\\dist\\client\\dev\\hot-reloader\\app\\use-websocket.js -> @vercel/turbopack-ecmascript-runtime/browser/dev/hmr-client/hmr-client.ts",
     "files": [
-      "static/chunks/bc98253f.44cacffe043e4df8.js",
-      "static/chunks/199.d6c987c1caf4d4ef.js"
-    ]
-  },
-  "..\\node_modules\\jspdf\\dist\\jspdf.es.min.js -> dompurify": {
-    "id": 2931,
-    "files": [
-      "static/chunks/931.b3b8a6815f643af4.js"
-    ]
-  },
-  "..\\node_modules\\jspdf\\dist\\jspdf.es.min.js -> html2canvas": {
-    "id": 4264,
-    "files": [
-      "static/chunks/ad2866b8.3a53275943d3b1db.js"
+      "static/chunks/fallback/_app-pages-browser_node_modules_next_dist_client_dev_noop-turbopack-hmr_js.js"
     ]
   },
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app": {
-    "id": 5139,
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_app",
     "files": [
-      "static/chunks/139.e8e07991ffedd534.js"
+      "static/chunks/fallback/_pages-dir-browser_node_modules_next_dist_pages__app_js.js"
     ]
   },
   "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error": {
-    "id": 1646,
+    "id": "..\\node_modules\\next\\dist\\client\\index.js -> ../pages/_error",
     "files": [
-      "static/chunks/646.a702bf538bb261ec.js"
+      "static/chunks/fallback/_pages-dir-browser_node_modules_next_dist_pages__error_js.js"
     ]
   }
 }
