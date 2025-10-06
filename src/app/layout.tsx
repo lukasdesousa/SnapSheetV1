@@ -18,17 +18,17 @@ export const metadata = {
     "SnapSheet é o web app rápido e gratuito que permite converter imagens para PDF com qualidade, sem instalação e totalmente online.",
   keywords:
     "SnapSheet, converter imagens para PDF, imagens para PDF online, ferramenta PDF, conversão de imagens, app online, PDF grátis",
-  authors: [{ name: "SnapSheet", url: "https://www.snap-sheet.com" }],
+  authors: [{ name: "SnapSheet", url: "https://snapsheetv1.vercel.app" }],
   robots: "index, follow",
   openGraph: {
     title: "SnapSheet - Converta suas imagens em PDF online",
     description:
       "SnapSheet é o web app rápido e gratuito que permite converter imagens para PDF com qualidade, sem instalação e totalmente online.",
-    url: "https://www.snap-sheet.com",
+    url: "https://snapsheetv1.vercel.app",
     siteName: "SnapSheet",
     images: [
       {
-        url: "https://www.snap-sheet.com/og-image.png",
+        url: "https://snapsheetv1.vercel.app/placeholder.svg",
         width: 1200,
         height: 630,
         alt: "SnapSheet - Imagens para PDF",
@@ -36,15 +36,6 @@ export const metadata = {
     ],
     locale: "pt_BR",
     type: "website",
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "SnapSheet - Converta imagens para PDF",
-    description:
-      "SnapSheet é rápido, gratuito e online: converta imagens para PDF em segundos.",
-    site: "@SnapSheetApp",
-    creator: "@SnapSheetApp",
-    images: ["https://www.snap-sheet.com/og-image.png"],
   },
 };
 
@@ -67,16 +58,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta property="og:locale" content={metadata.openGraph.locale} />
         {metadata.openGraph.images.map((img, i) => (
           <meta property="og:image" key={i} content={img.url} />
-        ))}
-
-        {/* Twitter Card */}
-        <meta name="twitter:card" content={metadata.twitter.card} />
-        <meta name="twitter:title" content={metadata.twitter.title} />
-        <meta name="twitter:description" content={metadata.twitter.description} />
-        <meta name="twitter:site" content={metadata.twitter.site} />
-        <meta name="twitter:creator" content={metadata.twitter.creator} />
-        {metadata.twitter.images.map((img, i) => (
-          <meta name="twitter:image" key={i} content={img} />
         ))}
 
         <link rel="icon" href="/favicon.ico" />
