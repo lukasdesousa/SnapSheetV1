@@ -24,6 +24,7 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
     return () => {
       newUrls.forEach(url => URL.revokeObjectURL(url));
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [images]);
   const onDrop = useCallback(
     (acceptedFiles: File[]) => {
