@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { FileDown, ImageIcon } from "lucide-react";
 import { generatePDF } from "@/lib/pdfGenerator";
 import { toast } from "sonner";
+import { sendSimpleNotification } from "@/lib/sendEmail";
 
 const Index = () => {
   const [images, setImages] = useState<File[]>([]);
@@ -29,6 +30,7 @@ const Index = () => {
     try {
       await generatePDF(images, config);
       toast.success("PDF gerado com sucesso!");
+      await sendSimpleNotification()
     } catch (error) {
       toast.error("Erro ao gerar PDF");
       console.error(error);
