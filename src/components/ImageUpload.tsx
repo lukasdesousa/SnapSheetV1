@@ -74,7 +74,7 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
         </p>
       </div>
 
-      {images.length > 0 && previewUrls.length > 0 && (
+      {images.length > 0 && previewUrls.length === images.length && (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
           {images.map((image, index) => (
             <div
@@ -83,8 +83,9 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
             >
               <img
                 src={previewUrls[index]}
-                alt={`Preview ${index + 1}`}
+                alt={`Pré-visualização da imagem ${index + 1}`}
                 className="w-full h-40 object-cover"
+                loading="lazy"
               />
               <Button
                 variant="destructive"
@@ -101,6 +102,7 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
           ))}
         </div>
       )}
+
     </div>
   );
 };

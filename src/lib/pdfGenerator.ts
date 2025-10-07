@@ -24,6 +24,7 @@ export const generatePDF = async (images: File[], config: PdfConfig) => {
     isFirstImage = false;
 
     const imageData = await readFileAsDataURL(image);
+    const format = getJsPdfImageType(image.type);
     const img = await loadImage(imageData);
 
     const imgWidth = img.width;
@@ -60,7 +61,7 @@ export const generatePDF = async (images: File[], config: PdfConfig) => {
 
     pdf.addImage(
       imageData,
-      "JPEG",
+      format,
       x,
       y,
       finalWidth,
@@ -88,3 +89,11 @@ const loadImage = (src: string): Promise<HTMLImageElement> => {
     img.src = src;
   });
 };
+
+const getJsPdfImageType = (mime: string): "JPEG" | "PNG" | "WEBP" => {
+  const lower = mime.toLowerCase();
+  if (lower.includes("png")) return "PNG";
+  if (lower.includes("webp")) return "WEBP";
+  return "JPEG";
+};
+
