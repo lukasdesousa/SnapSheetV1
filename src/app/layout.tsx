@@ -2,6 +2,7 @@
 import { ReactNode } from "react";
 import { Poppins } from "next/font/google";
 import { Providers } from "@/providers/Providers";
+import { Analytics } from "@vercel/analytics/next"
 import "./index.css";
 
 // Configuração da fonte Poppins
@@ -63,7 +64,10 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <link rel="icon" href="/favicon.ico" />
       </head>
       <body>
-        <Providers>{children}</Providers>
+        <Providers>
+          {children}
+          <Analytics />
+        </Providers>
       </body>
     </html>
   );
