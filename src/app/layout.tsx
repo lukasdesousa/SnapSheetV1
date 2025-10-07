@@ -58,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta property="og:site_name" content={metadata.openGraph.siteName} />
         <meta property="og:locale" content={metadata.openGraph.locale} />
         <meta name="google-adsense-account" content="ca-pub-3912537462625302" />
+        <meta name="monetag" content="9f1799908549d5c6e6c48dd5b9b8c46f" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3912537462625302"
           crossOrigin="anonymous"></script>
         {metadata.openGraph.images.map((img, i) => (
