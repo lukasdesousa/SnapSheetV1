@@ -57,6 +57,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta property="og:url" content={metadata.openGraph.url} />
         <meta property="og:site_name" content={metadata.openGraph.siteName} />
         <meta property="og:locale" content={metadata.openGraph.locale} />
+        <meta name="google-adsense-account" content="ca-pub-3912537462625302" />
         {metadata.openGraph.images.map((img, i) => (
           <meta property="og:image" key={i} content={img.url} />
         ))}
