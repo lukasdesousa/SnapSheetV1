@@ -1,7 +1,7 @@
 import jsPDF from "jspdf";
 import { PdfConfig } from "@/components/PdfSettings";
 
-export const generatePDF = async (images: File[], config: PdfConfig) => {
+export const generatePDF = async (images: File[], config: PdfConfig, fileName: string = "images-to-pdf") => {
   const pdf = new jsPDF({
     orientation: config.orientation,
     unit: "mm",
@@ -69,7 +69,7 @@ export const generatePDF = async (images: File[], config: PdfConfig) => {
     );
   }
 
-  pdf.save("images-to-pdf.pdf");
+  pdf.save(`${fileName}.pdf`);
 };
 
 const readFileAsDataURL = (file: File): Promise<string> => {

@@ -70,11 +70,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
           }}
         />
 
-        <script
-          dangerouslySetInnerHTML={{
-            __html: "(function(){var s = document.createElement('script'); s.dataset.zone = '10007307'; s.src = 'https://groleegni.net/vignette.min.js'; ([document.documentElement, document.body].filter(Boolean).pop().appendChild(s)); })();"
-          }}
-        />
 
         {metadata.openGraph.images.map((img, i) => (
           <meta property="og:image" key={i} content={img.url} />

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { ImageUpload } from "@/components/ImageUpload";
 import { PdfSettings, PdfConfig } from "@/components/PdfSettings";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { FileDown, ImageIcon } from "lucide-react";
 import { generatePDF } from "@/lib/pdfGenerator";
 import { toast } from "sonner";
@@ -11,6 +13,7 @@ import { sendSimpleNotification } from "@/lib/sendEmail";
 
 const Index = () => {
   const [images, setImages] = useState<File[]>([]);
+  const [pdfName, setPdfName] = useState("images-to-pdf");
   const [config, setConfig] = useState<PdfConfig>({
     pageSize: "a4",
     orientation: "portrait",
@@ -28,9 +31,9 @@ const Index = () => {
 
     setIsGenerating(true);
     try {
-      await generatePDF(images, config);
+      await generatePDF(images, config, pdfName);
       toast.success("PDF gerado com sucesso!");
-      await sendSimpleNotification()
+      await sendSimpleNotification();
     } catch (error) {
       toast.error("Erro ao gerar PDF");
       console.error(error);
@@ -61,6 +64,21 @@ const Index = () => {
 
           <div className="space-y-6">
             <PdfSettings config={config} onConfigChange={setConfig} />
+
+            <div className="space-y-2">
+              <Label htmlFor="pdf-name">Nome do arquivo PDF</Label>
+              <Input
+                id="pdf-name"
+                type="text"
+                value={pdfName}
+                onChange={(e) => setPdfName(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ''))}
+                placeholder="nome-do-arquivo"
+                className="font-mono"
+              />
+              <p className="text-xs text-muted-foreground">
+                Apenas letras, números, hífens e underscores
+              </p>
+            </div>
 
             <Button
               onClick={handleGeneratePDF}
