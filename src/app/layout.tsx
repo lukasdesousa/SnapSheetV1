@@ -61,7 +61,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="monetag" content="9f1799908549d5c6e6c48dd5b9b8c46f" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3912537462625302"
           crossOrigin="anonymous"></script>
-        <script src="https://fpyf8.com/88/tag.min.js" data-zone="176521" async data-cfasync="false"></script>
+        
+        <script src="https://staupsoaksy.net/act/files/tag.min.js?z=10007237" data-cfasync="false" async></script>
+
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "(function(s){s.dataset.zone='10007297';s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))"
+          }}
+        />
+
         {metadata.openGraph.images.map((img, i) => (
           <meta property="og:image" key={i} content={img.url} />
         ))}
