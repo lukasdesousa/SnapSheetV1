@@ -30,11 +30,9 @@ export async function sendSimpleNotification() {
     });
 
     if (error) {
-      console.error("Erro ao enviar o e-mail:", error);
       throw error;
     }
 
-    console.log("E-mail enviado com sucesso! ID:", data?.id);
     return data;
   } catch (err) {
     console.error("Falha no envio de e-mail:", err);
