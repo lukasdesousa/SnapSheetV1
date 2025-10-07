@@ -61,12 +61,15 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="monetag" content="9f1799908549d5c6e6c48dd5b9b8c46f" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3912537462625302"
           crossOrigin="anonymous"></script>
-        
         <script src="https://staupsoaksy.net/act/files/tag.min.js?z=10007237" data-cfasync="false" async></script>
-
         <script
           dangerouslySetInnerHTML={{
             __html: "(function(s){s.dataset.zone='10007297';s.src='https://gizokraijaw.net/vignette.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))"
+          }}
+        />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "(function(){var s = document.createElement('script'); s.dataset.zone = '10007307'; s.src = 'https://groleegni.net/vignette.min.js'; ([document.documentElement, document.body].filter(Boolean).pop().appendChild(s)); })();"
           }}
         />
 
