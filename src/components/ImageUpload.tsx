@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,29 +11,32 @@ interface ImageUploadProps {
 export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
   const [previewUrls, setPreviewUrls] = useState<string[]>([]);
 
-  // Cria e gerencia URLs de preview
-  useEffect(() => {
-    // Revoga URLs antigas
-    previewUrls.forEach(url => URL.revokeObjectURL(url));
-    
-    // Cria novas URLs
-    const newUrls = images.map(file => URL.createObjectURL(file));
-    setPreviewUrls(newUrls);
+  // Converte File para base64
+  const convertToBase64 = (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
-    // Cleanup: revoga URLs quando componente desmonta ou imagens mudam
-    return () => {
-      newUrls.forEach(url => URL.revokeObjectURL(url));
-    };
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [images]);
   const onDrop = useCallback(
-    (acceptedFiles: File[]) => {
+    async (acceptedFiles: File[]) => {
       const imageFiles = acceptedFiles.filter((file) =>
         file.type.startsWith("image/")
       );
+      
+      // Converte novas imagens para base64
+      const newBase64Previews = await Promise.all(
+        imageFiles.map(file => convertToBase64(file))
+      );
+      
+      // Atualiza os arrays de imagens e previews
       onImagesChange([...images, ...imageFiles]);
+      setPreviewUrls([...previewUrls, ...newBase64Previews]);
     },
-    [images, onImagesChange]
+    [images, previewUrls, onImagesChange]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
@@ -45,7 +48,9 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
 
   const removeImage = (index: number) => {
     const newImages = images.filter((_, i) => i !== index);
+    const newPreviews = previewUrls.filter((_, i) => i !== index);
     onImagesChange(newImages);
+    setPreviewUrls(newPreviews);
   };
 
   return (
