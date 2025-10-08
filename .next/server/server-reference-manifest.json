@@ -1,5 +1,19 @@
 {
-  "node": {},
+  "node": {
+    "00848c5c32bd3d1859c4a25e0d0e2ceb0dd762017d": {
+      "workers": {
+        "app/page": {
+          "moduleId": "(action-browser)/./node_modules/next/dist/build/webpack/loaders/next-flight-action-entry-loader.js?actions=%5B%5B%22C%3A%5C%5CUsers%5C%5Clukas%5C%5COneDrive%5C%5C%C3%81rea%20de%20Trabalho%5C%5CSnapSheet%5C%5CSnapSheetV1%5C%5Csrc%5C%5Clib%5C%5CsendEmail.ts%22%2C%5B%7B%22id%22%3A%2200848c5c32bd3d1859c4a25e0d0e2ceb0dd762017d%22%2C%22exportedName%22%3A%22sendSimpleNotification%22%2C%22filename%22%3A%22..%2FC%3A%5C%5CUsers%5C%5Clukas%5C%5COneDrive%5C%5C%C3%81rea%20de%20Trabalho%5C%5CSnapSheet%5C%5CSnapSheetV1%5C%5Csrc%5C%5Clib%5C%5CsendEmail.ts%22%7D%5D%5D%5D&__client_imported__=true!",
+          "async": false
+        }
+      },
+      "layer": {
+        "app/page": "action-browser"
+      },
+      "filename": "../C:\\Users\\lukas\\OneDrive\\Área de Trabalho\\SnapSheet\\SnapSheetV1\\src\\lib\\sendEmail.ts",
+      "exportedName": "sendSimpleNotification"
+    }
+  },
   "edge": {},
   "encryptionKey": "x+rGjiO3E1R49VNDMT/WdCHAjyGDn11qAB0ycCDKBS8="
 }

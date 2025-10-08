@@ -5,7 +5,6 @@ import { Providers } from "@/providers/Providers";
 import { Analytics } from "@vercel/analytics/next"
 import "./index.css";
 
-// Configuração da fonte Poppins
 const poppins = Poppins({
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
@@ -14,25 +13,25 @@ const poppins = Poppins({
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const metadata = {
-  title: "SnapSheet - Converta suas imagens em PDF online",
+  title: "Images to PDF",
   description:
     "SnapSheet é o web app rápido e gratuito que permite converter imagens para PDF com qualidade, sem instalação e totalmente online.",
   keywords:
-    "SnapSheet, converter imagens para PDF, imagens para PDF online, ferramenta PDF, conversão de imagens, app online, PDF grátis",
-  authors: [{ name: "SnapSheet", url: "https://snapsheetv1.vercel.app" }],
+    "SnapSheet, converter imagens para PDF, imagens para PDF online, ferramenta PDF, conversão de imagens, app online, PDF grátis, images to pdf, free image conversor, free image to pdf, image pdf",
+  authors: [{ name: "SnapSheet", url: "https://snapsheet.space/" }],
   robots: "index, follow",
   openGraph: {
-    title: "SnapSheet - Converta suas imagens em PDF online",
+    title: "Image to PDF",
     description:
       "SnapSheet é o web app rápido e gratuito que permite converter imagens para PDF com qualidade, sem instalação e totalmente online.",
-    url: "https://snapsheetv1.vercel.app",
+    url: "https://snapsheet.space/",
     siteName: "SnapSheet",
     images: [
       {
-        url: "https://snapsheetv1.vercel.app/favicon.ico",
+        url: "https://snapsheet.space/favicon.ico",
         width: 1200,
         height: 630,
-        alt: "SnapSheet - Imagens para PDF",
+        alt: "Image to PDF",
       },
     ],
     locale: "pt_BR",
@@ -49,8 +48,6 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="description" content={metadata.description} />
         <meta name="keywords" content={metadata.keywords} />
         <meta name="robots" content={metadata.robots} />
-
-        {/* Open Graph */}
         <meta property="og:title" content={metadata.openGraph.title} />
         <meta property="og:description" content={metadata.openGraph.description} />
         <meta property="og:type" content={metadata.openGraph.type} />
@@ -61,6 +58,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
         <meta name="monetag" content="9f1799908549d5c6e6c48dd5b9b8c46f" />
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-3912537462625302"
           crossOrigin="anonymous"></script>
+          
         <script src="https://staupsoaksy.net/act/files/tag.min.js?z=10007237" data-cfasync="false" async></script>
         <script
           dangerouslySetInnerHTML={{
@@ -72,7 +70,7 @@ export default function RootLayout({ children }: { children: ReactNode }) {
             __html: "(function(){var s = document.createElement('script'); s.dataset.zone = '10007307'; s.src = 'https://groleegni.net/vignette.min.js'; ([document.documentElement, document.body].filter(Boolean).pop().appendChild(s)); })();"
           }}
         />
-
+        
 
         {metadata.openGraph.images.map((img, i) => (
           <meta property="og:image" key={i} content={img.url} />

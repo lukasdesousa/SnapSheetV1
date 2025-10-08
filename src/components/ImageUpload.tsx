@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 import { Upload, X, RotateCw, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -51,7 +51,7 @@ const SortableImage = ({ item, onRemove, onRotate }: SortableImageProps) => {
   const style = {
     transform: CSS.Transform.toString(transform),
     transition,
-    opacity: isDragging ? 0.5 : 1,
+    opacity: isDragging ? 0.6 : 1,
   };
 
   return (
@@ -71,6 +71,7 @@ const SortableImage = ({ item, onRemove, onRotate }: SortableImageProps) => {
           loading="lazy"
         />
       </div>
+
       <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
         <Button
           variant="secondary"
@@ -95,6 +96,7 @@ const SortableImage = ({ item, onRemove, onRotate }: SortableImageProps) => {
           <X className="w-4 h-4" />
         </Button>
       </div>
+
       <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
         <p className="text-xs text-white truncate">{item.file.name}</p>
       </div>
@@ -112,7 +114,7 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
     })
   );
 
-  // Converte File para base64
+  // Converter arquivo em Base64
   const convertToBase64 = (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
       const reader = new FileReader();
@@ -122,79 +124,99 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
     });
   };
 
-  const onDrop = useCallback(
-    async (acceptedFiles: File[]) => {
-      const imageFiles = acceptedFiles.filter((file) =>
-        file.type.startsWith("image/")
-      );
-      
-      const newItems = await Promise.all(
-        imageFiles.map(async (file) => ({
-          id: `${Date.now()}-${Math.random()}`,
+  // Sincronizar imagens externas (prop) com estado local
+  useEffect(() => {
+    const syncImages = async () => {
+      const items = await Promise.all(
+        images.map(async (file) => ({
+          id: `${file.name}-${file.lastModified}`,
           file,
           preview: await convertToBase64(file),
           rotation: 0,
         }))
       );
-      
-      const updatedItems = [...imageItems, ...newItems];
-      setImageItems(updatedItems);
-      onImagesChange(updatedItems.map(item => item.file));
+      setImageItems(items);
+    };
+
+    if (images.length > 0) syncImages();
+    else setImageItems([]);
+  }, [images]);
+
+  // Upload via dropzone
+  const onDrop = useCallback(
+    async (acceptedFiles: File[]) => {
+      const imageFiles = acceptedFiles.filter((f) =>
+        f.type.startsWith("image/")
+      );
+
+      const newItems = await Promise.all(
+        imageFiles.map(async (file) => ({
+          id: `${file.name}-${file.lastModified}-${Math.random()}`,
+          file,
+          preview: await convertToBase64(file),
+          rotation: 0,
+        }))
+      );
+
+      const updatedFiles = [...images, ...imageFiles];
+      setImageItems((prev) => [...prev, ...newItems]);
+      onImagesChange(updatedFiles);
     },
-    [imageItems, onImagesChange]
+    [images, onImagesChange]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({
     onDrop,
-    accept: {
-      "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"],
-    },
+    accept: { "image/*": [".png", ".jpg", ".jpeg", ".gif", ".webp"] },
   });
 
+  // Excluir imagem individual
   const removeImage = (id: string) => {
-    const updatedItems = imageItems.filter(item => item.id !== id);
+    const updatedItems = imageItems.filter((item) => item.id !== id);
     setImageItems(updatedItems);
-    onImagesChange(updatedItems.map(item => item.file));
+    onImagesChange(updatedItems.map((item) => item.file));
   };
 
+  // Rodar imagem
   const rotateImage = (id: string) => {
-    const updatedItems = imageItems.map(item =>
-      item.id === id ? { ...item, rotation: (item.rotation + 90) % 360 } : item
+    setImageItems((prev) =>
+      prev.map((item) =>
+        item.id === id
+          ? { ...item, rotation: (item.rotation + 90) % 360 }
+          : item
+      )
     );
-    setImageItems(updatedItems);
   };
 
+  // Limpar todas
   const clearAllImages = () => {
     setImageItems([]);
     onImagesChange([]);
   };
 
+  // Reordenar imagens
   const handleDragEnd = (event: DragEndEvent) => {
     const { active, over } = event;
+    if (!over || active.id === over.id) return;
 
-    if (over && active.id !== over.id) {
-      const oldIndex = imageItems.findIndex(item => item.id === active.id);
-      const newIndex = imageItems.findIndex(item => item.id === over.id);
-      
-      const reorderedItems = arrayMove(imageItems, oldIndex, newIndex);
-      setImageItems(reorderedItems);
-      onImagesChange(reorderedItems.map(item => item.file));
-    }
+    const oldIndex = imageItems.findIndex((i) => i.id === active.id);
+    const newIndex = imageItems.findIndex((i) => i.id === over.id);
+
+    const reordered = arrayMove(imageItems, oldIndex, newIndex);
+    setImageItems(reordered);
+    onImagesChange(reordered.map((i) => i.file));
   };
 
   return (
     <div className="space-y-6">
+      {/* Área de upload */}
       <div
         {...getRootProps()}
-        className={`
-          border-2 border-dashed rounded-xl p-12 text-center cursor-pointer
-          transition-all duration-300
-          ${
-            isDragActive
-              ? "border-primary bg-primary/10 scale-[1.02]"
-              : "border-border hover:border-primary/50 hover:bg-card/50"
-          }
-        `}
+        className={`border-2 border-dashed rounded-xl p-12 text-center cursor-pointer transition-all duration-300 ${
+          isDragActive
+            ? "border-primary bg-primary/10 scale-[1.02]"
+            : "border-border hover:border-primary/50 hover:bg-card/50"
+        }`}
       >
         <input {...getInputProps()} />
         <Upload className="w-16 h-16 mx-auto mb-4 text-muted-foreground" />
@@ -208,11 +230,13 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
         </p>
       </div>
 
+      {/* Lista de imagens */}
       {imageItems.length > 0 && (
         <div className="space-y-4">
           <div className="flex justify-between items-center">
             <p className="text-sm text-muted-foreground">
-              Arraste para reordenar • {imageItems.length} {imageItems.length === 1 ? "imagem" : "imagens"}
+              Arraste para reordenar • {imageItems.length}{" "}
+              {imageItems.length === 1 ? "imagem" : "imagens"}
             </p>
             <Button
               variant="outline"
@@ -231,7 +255,7 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
             onDragEnd={handleDragEnd}
           >
             <SortableContext
-              items={imageItems.map(item => item.id)}
+              items={imageItems.map((i) => i.id)}
               strategy={rectSortingStrategy}
             >
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
@@ -248,7 +272,6 @@ export const ImageUpload = ({ images, onImagesChange }: ImageUploadProps) => {
           </DndContext>
         </div>
       )}
-
     </div>
   );
 };
