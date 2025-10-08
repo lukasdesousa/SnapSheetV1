@@ -58,26 +58,29 @@ const SortableImage = ({ item, onRemove, onRotate }: SortableImageProps) => {
     <div
       ref={setNodeRef}
       style={style}
-      className="relative group rounded-lg overflow-hidden bg-card border border-border hover:border-primary/50 transition-all cursor-move"
-      {...attributes}
-      {...listeners}
+      className="relative group rounded-lg overflow-hidden bg-card border border-border hover:border-primary/50 transition-all"
     >
-      <div className="relative w-full h-40">
+      <div 
+        className="relative w-full h-40 cursor-move"
+        {...attributes}
+        {...listeners}
+      >
         <img
           src={item.preview}
           alt={`Preview ${item.file.name}`}
-          className="w-full h-full object-cover transition-transform"
+          className="w-full h-full object-cover transition-transform pointer-events-none"
           style={{ transform: `rotate(${item.rotation}deg)` }}
           loading="lazy"
         />
       </div>
-      <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity">
+      <div className="absolute top-2 right-2 flex gap-1 opacity-0 group-hover:opacity-100 transition-opacity z-10">
         <Button
           variant="secondary"
           size="icon"
           className="h-8 w-8 bg-background/90 hover:bg-background"
           onClick={(e) => {
             e.stopPropagation();
+            e.preventDefault();
             onRotate();
           }}
         >
@@ -89,13 +92,16 @@ const SortableImage = ({ item, onRemove, onRotate }: SortableImageProps) => {
           className="h-8 w-8"
           onClick={(e) => {
             e.stopPropagation();
+            e.preventDefault();
             onRemove();
           }}
         >
           <X className="w-4 h-4" />
         </Button>
       </div>
-      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2">
+      <div 
+        className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/60 to-transparent p-2 pointer-events-none"
+      >
         <p className="text-xs text-white truncate">{item.file.name}</p>
       </div>
     </div>
