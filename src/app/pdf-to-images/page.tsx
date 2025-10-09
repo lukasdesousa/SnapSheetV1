@@ -1,11 +1,12 @@
+'use client';
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Download, FileUp, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
-import { extractImagesFromPDF } from "@/lib/pdfToImages";
+import Link from "next/link";
 
 interface ExtractedImage {
   dataUrl: string;
@@ -35,6 +36,7 @@ export default function PdfToImages() {
 
     setIsExtracting(true);
     try {
+      const { extractImagesFromPDF } = await import("@/lib/pdfToImages");
       const images = await extractImagesFromPDF(pdfFile);
       setExtractedImages(images);
       toast.success(`Extracted ${images.length} pages successfully!`);
@@ -65,7 +67,7 @@ export default function PdfToImages() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <Link to="/">
+        <Link href="/">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Tools

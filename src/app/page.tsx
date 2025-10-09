@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { Card } from "@/components/ui/card";
 import { FileImage, FileText, Merge, Shrink } from "lucide-react";
 
@@ -48,7 +48,7 @@ export default function Home() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
           {tools.map((tool) => (
-            <Link key={tool.path} to={tool.path}>
+            <Link key={tool.path} href={tool.path}>
               <Card className="group relative overflow-hidden p-8 h-full hover:shadow-glow transition-all duration-300 cursor-pointer border-border hover:border-primary/50 bg-card">
                 <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
                 

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from "react";
 import { ImageUpload } from "@/components/ImageUpload";
 import { PdfSettings, PdfConfig } from "@/components/PdfSettings";
@@ -5,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { FileDown, ImageIcon, ArrowLeft } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { generatePDF } from "@/lib/pdfGenerator";
 import { toast } from "sonner";
 import { sendSimpleNotification } from "@/lib/sendEmail";
@@ -44,7 +46,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <Link to="/">
+        <Link href="/">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Tools

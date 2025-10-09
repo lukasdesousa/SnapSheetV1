@@ -1,10 +1,12 @@
+'use client';
+
 import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { Download, FileUp, ArrowLeft, X, GripVertical } from "lucide-react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { mergePDFs } from "@/lib/mergePdf";
 import {
   DndContext,
@@ -146,7 +148,7 @@ export default function MergePdf() {
   return (
     <div className="min-h-screen bg-background">
       <div className="container mx-auto px-4 py-8">
-        <Link to="/">
+        <Link href="/">
           <Button variant="ghost" className="mb-6">
             <ArrowLeft className="mr-2 h-4 w-4" />
             Back to Tools

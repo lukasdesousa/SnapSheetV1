@@ -11,7 +11,7 @@ export const mergePDFs = async (files: File[], outputName: string = "merged") =>
   }
 
   const mergedPdfBytes = await mergedPdf.save();
-  const blob = new Blob([mergedPdfBytes], { type: "application/pdf" });
+  const blob = new Blob([Uint8Array.from(mergedPdfBytes)], { type: "application/pdf" });
   const url = URL.createObjectURL(blob);
 
   const link = document.createElement("a");
