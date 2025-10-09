@@ -1,7 +1,9 @@
 import * as pdfjsLib from "pdfjs-dist";
 
-// Configure worker - usando unpkg para maior confiabilidade
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://unpkg.com/pdfjs-dist@${pdfjsLib.version}/build/pdf.worker.min.js`;
+// Use worker from CDN with proper CORS support
+if (typeof window !== 'undefined') {
+  pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js';
+}
 
 interface ExtractedImage {
   dataUrl: string;
