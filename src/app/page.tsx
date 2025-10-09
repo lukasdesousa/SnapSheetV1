@@ -1,106 +1,82 @@
-'use client';
+import { Link } from "react-router-dom";
+import { Card } from "@/components/ui/card";
+import { FileImage, FileText, Merge, Shrink } from "lucide-react";
 
-import { useState } from "react";
-import { ImageUpload } from "@/components/ImageUpload";
-import { PdfSettings, PdfConfig } from "@/components/PdfSettings";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { FileDown, ImageIcon } from "lucide-react";
-import { generatePDF } from "@/lib/pdfGenerator";
-import { toast } from "sonner";
-import { sendSimpleNotification } from "@/lib/sendEmail";
+const tools = [
+  {
+    name: "Images to PDF",
+    description: "Convert multiple images into a single PDF with custom settings",
+    icon: FileText,
+    path: "/images-to-pdf",
+    gradient: "from-primary to-accent",
+  },
+  {
+    name: "PDF to Images",
+    description: "Extract all pages from a PDF as individual images",
+    icon: FileImage,
+    path: "/pdf-to-images",
+    gradient: "from-accent to-primary-glow",
+  },
+  {
+    name: "Merge PDFs",
+    description: "Combine multiple PDF files into one document",
+    icon: Merge,
+    path: "/merge-pdf",
+    gradient: "from-primary-glow to-primary",
+  },
+  {
+    name: "Compress Images",
+    description: "Reduce image file sizes while maintaining quality",
+    icon: Shrink,
+    path: "/compress-images",
+    gradient: "from-accent to-destructive",
+  },
+];
 
-const Index = () => {
-  const [images, setImages] = useState<File[]>([]);
-  const [pdfName, setPdfName] = useState("images-to-pdf");
-  const [config, setConfig] = useState<PdfConfig>({
-    pageSize: "a4",
-    orientation: "portrait",
-    margin: 10,
-    spacing: 5,
-    imageSize: "contain",
-  });
-  const [isGenerating, setIsGenerating] = useState(false);
-
-  const handleGeneratePDF = async () => {
-    if (images.length === 0) {
-      toast.error("Adicione pelo menos uma imagem");
-      return;
-    }
-
-    setIsGenerating(true);
-    try {
-      await generatePDF(images, config, pdfName);
-      toast.success("PDF gerado com sucesso!");
-      await sendSimpleNotification();
-    } catch (error) {
-      toast.error("Erro ao gerar PDF");
-      console.error(error);
-    } finally {
-      setIsGenerating(false);
-    }
-  };
-
+export default function Home() {
   return (
     <div className="min-h-screen bg-background">
-      <div className="container mx-auto px-4 py-8 max-w-7xl">
-        <header className="text-center mb-12">
-          <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-primary mb-4 shadow-glow">
-            <ImageIcon className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-4xl md:text-5xl font-bold mb-3 bg-gradient-primary bg-clip-text text-transparent">
+      <div className="container mx-auto px-4 py-12">
+        <div className="text-center mb-12 space-y-4">
+          <h1 className="text-5xl font-bold bg-gradient-primary bg-clip-text text-transparent">
             SnapSheet
           </h1>
-          <p className="text-muted-foreground text-lg">
-            Converta suas imagens em PDF com estilo personalizado
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Professional tools for PDF and image conversion. Fast, free, and easy to use.
           </p>
-        </header>
+        </div>
 
-        <div className="grid lg:grid-cols-3 gap-8">
-          <div className="lg:col-span-2">
-            <ImageUpload images={images} onImagesChange={setImages} />
-          </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6 max-w-5xl mx-auto">
+          {tools.map((tool) => (
+            <Link key={tool.path} to={tool.path}>
+              <Card className="group relative overflow-hidden p-8 h-full hover:shadow-glow transition-all duration-300 cursor-pointer border-border hover:border-primary/50 bg-card">
+                <div className={`absolute inset-0 bg-gradient-to-br ${tool.gradient} opacity-0 group-hover:opacity-10 transition-opacity duration-300`} />
+                
+                <div className="relative z-10 space-y-4">
+                  <div className="w-16 h-16 rounded-xl bg-gradient-primary flex items-center justify-center shadow-glow">
+                    <tool.icon className="w-8 h-8 text-primary-foreground" />
+                  </div>
+                  
+                  <div className="space-y-2">
+                    <h3 className="text-2xl font-semibold text-foreground group-hover:text-primary transition-colors">
+                      {tool.name}
+                    </h3>
+                    <p className="text-muted-foreground">
+                      {tool.description}
+                    </p>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          ))}
+        </div>
 
-          <div className="space-y-6">
-            <PdfSettings config={config} onConfigChange={setConfig} />
-
-            <div className="space-y-2">
-              <Label htmlFor="pdf-name">Nome do arquivo PDF</Label>
-              <Input
-                id="pdf-name"
-                type="text"
-                value={pdfName}
-                onChange={(e) => setPdfName(e.target.value.replace(/[^a-zA-Z0-9-_]/g, ''))}
-                placeholder="nome-do-arquivo"
-                className="font-mono"
-              />
-              <p className="text-xs text-muted-foreground">
-                Apenas letras, números, hífens e underscores
-              </p>
-            </div>
-
-            <Button
-              onClick={handleGeneratePDF}
-              disabled={images.length === 0 || isGenerating}
-              className="w-full h-12 text-base font-semibold bg-gradient-primary hover:opacity-90 transition-opacity shadow-glow"
-              size="lg"
-            >
-              <FileDown className="w-5 h-5 mr-2" />
-              {isGenerating ? "Gerando..." : "Gerar PDF"}
-            </Button>
-
-            {images.length > 0 && (
-              <div className="text-center text-sm text-muted-foreground">
-                {images.length} {images.length === 1 ? "imagem" : "imagens"}{" "}
-                selecionada{images.length === 1 ? "" : "s"}
-              </div>
-            )}
-          </div>
+        <div className="mt-16 text-center">
+          <p className="text-sm text-muted-foreground">
+            All tools work directly in your browser. No uploads to servers, your files stay private.
+          </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default Index;
+}
